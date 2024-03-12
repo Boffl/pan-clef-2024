@@ -1,0 +1,9 @@
+datasets
+numpy
+pandas
+pynvml
+regex
+scikit_learn
+spacy
+torch
+transformers
