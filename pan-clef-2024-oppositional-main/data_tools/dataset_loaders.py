@@ -7,12 +7,12 @@ import pandas as pd
 from data_tools.dataset_utils import reconstruct_spacy_docs_from_json, BINARY_MAPPING_CONSPIRACY_POS, \
     BINARY_MAPPING_CRITICAL_POS, span_annot_to_spanf1_format, validate_json_annotations, is_empty_annot
 from settings import (
-    TRAIN_FULL_DATASET_EN,
-    TRAIN_FULL_DATASET_ES,
     TRAIN_DATASET_EN,
     TRAIN_DATASET_ES,
-    DEV_DATASET_EN,
-    DEV_DATASET_ES,
+    SPLIT_TRAIN_DATASET_EN,
+    SPLIT_TRAIN_DATASET_ES,
+    SPLIT_DEV_DATASET_EN,
+    SPLIT_DEV_DATASET_ES,
     TEST_DATASET_EN,
 )
 
@@ -24,8 +24,8 @@ def load_dataset_full(lang, format='docbin'):
     :return:
     '''
     print(f'Loading official JSON {lang} dataset')
-    if lang == 'en': fname = TRAIN_FULL_DATASET_EN
-    elif lang == 'es': fname = TRAIN_FULL_DATASET_ES
+    if lang == 'en': fname = TRAIN_DATASET_EN
+    elif lang == 'es': fname = TRAIN_DATASET_ES
     else: raise ValueError(f'Unknown language: {lang}')
     if format == 'docbin':
         dataset = reconstruct_spacy_docs_from_json(fname, lang)
@@ -35,7 +35,7 @@ def load_dataset_full(lang, format='docbin'):
     else: raise ValueError(f'Unknown format: {format}')
     return dataset
 
-def load_dataset_train_dev(lang, format='docbin'):
+def load_dataset_split(lang, format='docbin'):
     '''
     Load .json dataset and, optionally, convert it to .docbin format.
     :param format: 'docbin' or 'json'
@@ -43,11 +43,11 @@ def load_dataset_train_dev(lang, format='docbin'):
     '''
     print(f'Loading train and dev JSON {lang} dataset')
     if lang == 'en':
-        fname_train = TRAIN_DATASET_EN
-        fname_dev = DEV_DATASET_EN
+        fname_train = SPLIT_TRAIN_DATASET_EN
+        fname_dev = SPLIT_DEV_DATASET_EN
     elif lang == 'es':
-        fname_train = TRAIN_DATASET_ES
-        fname_dev = DEV_DATASET_ES
+        fname_train = SPLIT_TRAIN_DATASET_ES
+        fname_dev = SPLIT_DEV_DATASET_ES
     else: raise ValueError(f'Unknown language: {lang}')
     if format == 'docbin':
         dataset_train = reconstruct_spacy_docs_from_json(fname_train, lang)
@@ -138,9 +138,9 @@ def load_span_annotations_from_json(json_file: str, span_f1_format=True) -> List
     else:
         return [item['annotations'] for item in data]
     
-def split_dev_set(lang, rndm_seed=42):
+def split_train_set(lang, rndm_seed=42):
     # Load your dataset from JSON file
-    with open(f'../data/dataset_{lang}_train_full.json', 'r') as f:
+    with open(f'../data/dataset_{lang}_train.json', 'r') as f:
         dataset = json.load(f)
 
     # Set seed for reproducibility
@@ -156,9 +156,9 @@ def split_dev_set(lang, rndm_seed=42):
     dev_set = dataset[split_index:]
 
     # Save the training and development sets to JSON files
-    with open(f'../data/dataset_{lang}_train.json', 'w') as f:
+    with open(f'../data/dataset_{lang}_split_train.json', 'w') as f:
         json.dump(train_set, f, indent=4)
-    with open(f'../data/dataset_{lang}_dev.json', 'w') as f:
+    with open(f'../data/dataset_{lang}_split_dev.json', 'w') as f:
         json.dump(dev_set, f, indent=4)
 
 
