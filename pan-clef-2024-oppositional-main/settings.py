@@ -5,8 +5,14 @@ when introducing new variables, add them to this file with empty or default valu
 '''
 
 # DATASETS
+# Original
 TRAIN_DATASET_EN = '../data/dataset_en_train.json'
 TRAIN_DATASET_ES = '../data/dataset_es_train.json'
 
-TEST_DATASET_EN = ''
-TEST_DATASET_ES = ''
+# Train-dev split
+SPLIT_TRAIN_DATASET_EN = '../data/dataset_en_split_train.json'
+SPLIT_TRAIN_DATASET_ES = '../data/dataset_es_split_train.json'
+
+SPLIT_DEV_DATASET_EN = '../data/dataset_en_split_dev.json'
+SPLIT_DEV_DATASET_ES = '../data/dataset_es_split_dev.json'
+
