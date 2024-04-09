@@ -2,7 +2,7 @@ import sys
 import os
 
 infolder = sys.argv[1]
-# price per 1k tokens
+# price per 1M tokens
 price_prompt = float(sys.argv[2])
 price_gen = float(sys.argv[3])
 
@@ -17,7 +17,7 @@ def count_cost_per_file(filepath):
         for line in infile:
             prompt_toks, gen_toks = line.split(',')[0], line.split(',')[1].strip()
 
-            cost += 0.001 * int(prompt_toks) * price_prompt + 0.001 * int(gen_toks) * price_gen
+            cost += 0.000001 * int(prompt_toks) * price_prompt + 0.001 * int(gen_toks) * price_gen
 
 
 cost = 0
