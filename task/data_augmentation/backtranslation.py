@@ -1,5 +1,6 @@
-import sys
-sys.path.append('C:/Users/Nadia Timoleon/Documents/GitHub/pan-clef-2024/task')
+# silly thins to make it run on Nadia's silly python setup, pls ignore
+# import sys
+# sys.path.append('C:/Users/Nadia Timoleon/Documents/GitHub/pan-clef-2024/task')
 
 import tqdm
 import argparse
@@ -59,7 +60,8 @@ if __name__ == "__main__":
 
     print("Loading and filtering data...")
     df = load_and_filter_data(data_name)
-    df = df.loc[:5].copy()
+    # uncomment the following line to test the code with a smaller dataset
+    # df = df.loc[:5].copy()
     print(f"Data loaded and filtered.\nNumber of sequences in the dataset: {len(df)}")
     print(f"Translating text from {source_lang} to {target_lang}...")
     df_translations = translate_text(df)
