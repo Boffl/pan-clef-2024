@@ -1,0 +1,6 @@
+The following text is to be categorized according to the following labels: <labels>
+Critical messages are those that question major decisions in the public health domain, but do not promote a conspiracist mentality; and conspiratorial messages that view the pandemic or public health decisions as a result of a malevolent conspiracy by secret, influential groups.
+
+<text>
+
+The category of the text above is: 
