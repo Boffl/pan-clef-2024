@@ -10,7 +10,8 @@ from typing import List
 from pathlib import Path
 
 # to be able to access the modules above, even when running with __name__ == __main__
-# sys.path.append("..")
+sys.path.append("..")
+from data_tools.evaluation_utils import evaluate_classif_predictions
 # from classif_experim.classif_utils import classif_scores
 # from data_tools.dataset_utils import save_text_category_predictions_to_json
 
@@ -104,6 +105,8 @@ if __name__ == "__main__":
     timestamp = datetime.now().strftime('%m-%d_%H_%M')
     # convert filepath to linux (in every case), take out the filename without the .json
     data_file_name = Path(data_file).as_posix().split('/')[-1].split(".")[0]
-    outfile_name = f"results/{model_name.split('/')[-1]}_{data_file_name}_{timestamp}.json"
+    outfile_name = f"predictions/{model_name.split('/')[-1]}_{data_file_name}_{timestamp}.json"
     save_text_category_predictions_to_json(ids, predictions, outfile_name)
+
+    evaluate_classif_predictions(outfile_name, data_file, 'conspiracy')
 
