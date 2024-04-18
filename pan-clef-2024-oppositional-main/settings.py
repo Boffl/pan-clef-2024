@@ -16,3 +16,6 @@ SPLIT_TRAIN_DATASET_ES = '../data/dataset_es_split_train.json'
 SPLIT_DEV_DATASET_EN = '../data/dataset_en_split_dev.json'
 SPLIT_DEV_DATASET_ES = '../data/dataset_es_split_dev.json'
 
+
+TEST_DATASET_EN = '../data/dataset_en_test.json'
+TEST_DATASET_ES = '../data/dataset_es_test.json'
