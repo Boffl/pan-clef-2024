@@ -4,12 +4,13 @@ The script ```LM_classify.py``` evaluates on the whole dataset that is provided,
 Finetuning also to come... Stay tuned for updates ;)
 
 ### Inputs
-it takes as positional arguments:
-- <tt>model_name</tt>: Any huggingface LM
-- <tt>datafile</tt>: Filepath to a datafile that has the form of data_en_train.json
-And as optional arguments:
-- <tt>--prompt_file</tt>: A txt file that is used for the prompt. It should contain placeholders ```<label>```and ```<text>```. Default value is <tt>simple_prompt.txt</tt>
-- <tt>--labels</tt>: Labels separated by comma. Default is <tt>'CONSPIRACY, CRITICAL'</tt> . <br>
+- positional arguments:
+    - <tt>model_name</tt>: Any huggingface LM
+    - <tt>datafile</tt>: Filepath to a datafile that has the form of data_en_train.json
+
+- optional arguments:
+    - <tt>--prompt_file</tt>: A txt file that is used for the prompt. It should contain placeholders ```<label>```and ```<text>```. Default value is <tt>simple_prompt.txt</tt>
+    - <tt>--labels</tt>: Labels separated by comma. Default is <tt>'CONSPIRACY, CRITICAL'</tt> . <br>
 
 Example call:
 ```
