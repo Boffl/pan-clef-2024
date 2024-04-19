@@ -2,7 +2,6 @@
 Simple Prompt
 ##################
 
-
 tiny-gpt2_dataset_en_split_dev_04-18_19_10
 -----------------
 F1_macro  : 0.445
@@ -14,7 +13,6 @@ recall    : 0.786
 MCC       : 0.043
 
 
-
 tiny-gpt2_dataset_es_split_dev_04-18_19_10
 -----------------
 F1        : 0.512
@@ -23,6 +21,16 @@ ACC       : 0.458
 prec      : 0.393
 recall    : 0.735
 MCC       : 0.019
+
+gpt2_dataset_en_split_dev_04-18_19_10
+-----------------
+F1_macro  : 0.281
+F1        : 0.554
+F1-neg    : 0.008
+ACC       : 0.385
+prec      : 0.384
+recall    : 0.994
+MCC       : -0.017
 
 
 ##################
