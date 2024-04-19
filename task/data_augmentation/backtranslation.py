@@ -3,7 +3,6 @@
 # sys.path.append('C:/Users/Nadia Timoleon/Documents/GitHub/pan-clef-2024/task')
 
 # Some setup for Hilal python setup.
-"""
 import pathlib
 import sys
 # Look for python code 1 directory up.
@@ -11,7 +10,6 @@ sys.path.append(pathlib.Path(__file__).parent.parent.resolve().as_posix())
 import os
 # Set active directory 2 directories up, to find ./data folder with pickles.
 os.chdir(pathlib.Path(__file__).parent.parent.parent.resolve().as_posix())
-"""
 
 import tqdm
 import argparse
@@ -34,10 +32,10 @@ def translate_text(df):
     # Load the model and tokenizer
     model_name = "Helsinki-NLP/opus-mt-es-en"
     model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    tokenizer = AutoTokenizer.from_pretrained(model_name, max_length=510, truncation=True)
     translations = []
     for text in tqdm.tqdm(df['text']):
-        input_ids = tokenizer.encode(text, return_tensors="pt")
+        input_ids = tokenizer.encode(text, return_tensors="pt", max_length=510)
         outputs = model.generate(input_ids)
         translated_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
         translations.append(translated_text)
@@ -72,7 +70,7 @@ if __name__ == "__main__":
     print("Loading and filtering data...")
     df = load_and_filter_data(data_name)
     # uncomment the following line to test the code with a smaller dataset
-    df = df.loc[:5].copy()
+    # df = df.loc[:5].copy()
     print(f"Data loaded and filtered.\nNumber of sequences in the dataset: {len(df)}")
     print(f"Translating text from {source_lang} to {target_lang}...")
     df_translations = translate_text(df)
