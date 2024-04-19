@@ -5,11 +5,16 @@ Finetuning also to come... Stay tuned for updates ;)
 
 ### Inputs
 it takes as positional arguments:
-- A model name, that is any huggingface LM
-- A datafile, that is in the form of data_en_train.json
+- <tt>model_name</tt>: Any huggingface LM
+- <tt>datafile</tt>: Filepath to a datafile that has the form of data_en_train.json
 And as optional arguments:
-- <tt>--prompt_file</tt>: a txt file that is used for the prompt. It should contain placeholders ```<label>```and ```<text>```. Default value is <tt>simple_prompt.txt</tt>
-- <tt>--labels</tt>: Labels separated by comma. Default is <tt>'CONSPIRACY, CRITICAL'</tt> .
+- <tt>--prompt_file</tt>: A txt file that is used for the prompt. It should contain placeholders ```<label>```and ```<text>```. Default value is <tt>simple_prompt.txt</tt>
+- <tt>--labels</tt>: Labels separated by comma. Default is <tt>'CONSPIRACY, CRITICAL'</tt> . <br>
+
+Example call:
+```
+python LM_classify.py sshleifer/tiny-gpt2 ..\..\data\dataset_en_split_dev.json
+```
 
 ### Outputs
 The script will create a file in the ```/predictions``` directory, where the answers of the model are saved in the appropriate json format. The filename contains the information about the experiment:
