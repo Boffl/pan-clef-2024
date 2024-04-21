@@ -42,7 +42,7 @@ def classify(text: str, classes: list[ str ],
     # system message
     messages = [
         {"role": "system",
-         "content": f"{prompt} {', '.join(classes)}"} ]
+         "content": f"{prompt}"} ]
 
     # append the examples (few-shot)
     for message in examples:
@@ -99,8 +99,9 @@ if __name__ == "__main__":
     parser.add_argument('--number_of_tweets', help="for the progress bar")
     parser.add_argument('--skip_lines', type=int, default=0, help="skip the first n tweets")
     parser.add_argument('--prompt', default="You are a helpful assistant, tasked with classifying the user input "
-                                            "according to following classes: ", help="Prompt that is used for "
-                                                                                     "classification")
+                                            "according to following classes: CONSPIRACY, CRITICAL.\n Critical messages are those that question major decisions in the public health domain, \
+                                            but do not promote a conspiracist mentality; and conspiratorial messages that view the pandemic or public health decisions as a result of a malevolent \
+                                                conspiracy by secret, influential groups.", help="Prompt that is used for classification")
     parser.add_argument('--model_name', default='gpt-3.5-turbo', help="GPT-Model")
     args = parser.parse_args()
 
