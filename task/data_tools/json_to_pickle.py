@@ -17,7 +17,7 @@ def convert_json_files_to_pickle(json_dir, pickle_dir):
         if filename.endswith('.json'):
             json_path = os.path.join(json_dir, filename)
             df = json_to_dataframe(json_path)
-            df = df[['id', 'text']].copy() # select only the 'id' and 'text' columns
+            df = df[['id', 'text', 'category']].copy()
             pickle_path = os.path.join(pickle_dir, os.path.splitext(filename)[0] + '.pkl')
             df.to_pickle(pickle_path)
             print(f"Converted {filename} to {pickle_path}")
