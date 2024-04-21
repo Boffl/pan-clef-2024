@@ -35,7 +35,8 @@ def classify(text, model, tokenizer, labels=["yes", "no"]):
     
     # whyyyyy does the truncation argument seem to have no effect??? what is wrong???
     model_inputs = tokenizer([text], return_tensors="pt", truncation=True).to(device)
-    logits = model(**model_inputs).logits.squeeze()[-1]
+    with torch.no_grad():
+        logits = model(**model_inputs).logits.squeeze()[-1]
     label_scores = {}
 
     for label in labels:
@@ -50,7 +51,8 @@ def classify(text, model, tokenizer, labels=["yes", "no"]):
                 token_text = tokenizer.decode(token)
                 new_text = text + token_text
                 new_inputs = tokenizer([new_text], return_tensors="pt", truncation=True).to(device)
-                logits = model(**new_inputs).logits.squeeze()[-1]
+                with torch.no_grad():
+                    logits = model(**new_inputs).logits.squeeze()[-1]
 
     # return the key with the highest value
     return max(label_scores.items(), key=lambda x:x[1])[0]
@@ -92,14 +94,23 @@ if __name__ == "__main__":
     for datapoint in tqdm(dataset):
         text = datapoint['text']
         ids.append(datapoint['id'])
-  
-
-        # filling in the prompt
-        prompt = re.sub("<text>", text, prompt_template)
-        prompt = re.sub("<labels>", labels, prompt)
-
-        label = classify(prompt, model, tokenizer, labels=label_list)
+        classification_done = False
+        while not classification_done:
+      
+            # filling in the prompt
+            prompt = re.sub("<text>", text, prompt_template)
+            prompt = re.sub("<labels>", labels, prompt)
+            try:
+                label = classify(prompt, model, tokenizer, labels=label_list)
+                classification_done = True
+            except torch.cuda.OutOfMemoryError:
+                print("The input was to long, cutting it in half...")
+                torch.cuda.empty_cache()
+                # cut the text in half
+                text = " ".join(text.split()[:len(text.split())])
+            
         predictions.append(label)
+        torch.cuda.empty_cache()
 
     # saving the results, make a sensible filename
     timestamp = datetime.now().strftime('%m-%d_%H_%M')

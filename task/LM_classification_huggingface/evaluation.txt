@@ -55,3 +55,12 @@ ACC       : 0.458
 prec      : 0.392
 recall    : 0.729
 MCC       : 0.016
+
+gpt2_dataset_en_split_dev_04-18_19_10
+F1_macro  : 0.282
+F1        : 0.547
+F1-neg    : 0.016
+ACC       : 0.380
+prec      : 0.381
+recall    : 0.974
+MCC       : -0.071
