@@ -1,5 +1,5 @@
 
-from transformers import AutoTokenizer, AutoModelForCausalLM
+from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 import re, sys
 import torch
 import argparse
@@ -84,9 +84,16 @@ if __name__ == "__main__":
     # adjust the max length for truncation of the tokenizer, so we have enough space for the labels
     longest_label = max([len(tokenizer.encode(label)) for label in label_list])
     tokenizer.model_max_length -= longest_label
+    
+    # Quantization, as shown here: https://colab.research.google.com/drive/1ge2F1QSK8Q7h0hn3YKuBCOAS0bK8E0wf?usp=sharing#scrollTo=VPD7QS_DR-mw
+    bnb_config = BitsAndBytesConfig(
+    load_in_4bit=True,
+    bnb_4bit_use_double_quant=True,
+    bnb_4bit_quant_type="nf4",
+    bnb_4bit_compute_dtype=torch.bfloat16
+    )
 
-    model = AutoModelForCausalLM.from_pretrained(model_name)  #  load_in_8bit=True Quantization, not working at the moment, for some reason...
-    model.to(device)
+    model = AutoModelForCausalLM.from_pretrained(model_name, quantization_config=bnb_config, device_map="auto")  #  load_in_8bit=True Quantization, not working at the moment, for some reason...
     print("download done")
 
     ids = []
