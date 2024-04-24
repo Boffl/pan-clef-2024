@@ -123,7 +123,7 @@ if __name__ == "__main__":
     timestamp = datetime.now().strftime('%m-%d_%H_%M')
     # convert filepath to linux (in every case), take out the filename without the .json
     data_file_name = Path(data_file).as_posix().split('/')[-1].split(".")[0]
-    outfile_name = f"predictions/{model_name.split('/')[-1]}_{data_file_name}_{timestamp}.json"
+    outfile_name = f"predictions/{prompt_file.split('.')[0]}_{model_name.split('/')[-1]}_{data_file_name}_{timestamp}.json"
     save_text_category_predictions_to_json(ids, predictions, outfile_name)
 
     evaluate_classif_predictions(outfile_name, data_file, 'conspiracy')
