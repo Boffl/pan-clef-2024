@@ -21,7 +21,7 @@ def run_classif_crossvalid(lang, model_label, model_params, positive_class='crit
     '''
     Run x-fold crossvalidation for a given model, and report the results.
     '''
-    logger.info(f'RUNNING crossvalid. for model: {model_label}')
+    logger.info(f'RUNNING crossvalid. for model: {model_label}, augment_data={augment_data}')
     score_fns = classif_scores('all')
     texts, classes, txt_ids = load_dataset_classification(lang, positive_class=positive_class)
     if test: texts, classes, txt_ids = texts[:test], classes[:test], txt_ids[:test]
@@ -37,13 +37,13 @@ def run_classif_crossvalid(lang, model_label, model_params, positive_class='crit
         # split data
         txt_tr, txt_tst = texts[train_index], texts[test_index]
         cls_tr, cls_tst = classes[train_index], classes[test_index]
-        print("len of train txt and cls, before augmentation:", len(txt_tr), len(cls_tr))
+        # logger.info("len of train txt and cls, before augmentation:", len(txt_tr), len(cls_tr))
         id_tst = txt_ids[test_index]
         if augment_data:
             aug_texts, aug_classes, aug_txt_ids = load_aug_dataset_classification(lang, positive_class=positive_class)
             txt_tr = pd.concat([txt_tr, aug_texts], ignore_index=True)
             cls_tr = pd.concat([cls_tr, aug_classes], ignore_index=True)
-            print("Running on augmented data. Lenght of the Traininset:", len(txt_tr), len(cls_tr))
+            logger.info("Running on augmented data. Lenght of the Traininset:", len(txt_tr), len(cls_tr))
         # train model
         model.fit(txt_tr, cls_tr)
         # evaluate model
@@ -110,7 +110,8 @@ def setup_logging(log_filename):
         handlers=[
             logging.FileHandler(log_filename),  # Log to a file with timestamp in its name
             logging.StreamHandler()  # Log to console
-        ]
+        ],
+        force=True  #Note in Colab I had to add force=True, for the logger to show the info messages If it causes problems, take it out
     )
     logger = logging.getLogger('')
 
@@ -163,9 +164,9 @@ def run_classif_experiments(lang, num_folds, rnd_seed, test=False, experim_label
             time.sleep(pause_after_model * 60)
     return pred_res
 
-def run_all_critic_conspi(seed=DEFAULT_RND_SEED, langs=['en', 'es'], augment_data=False):
+def run_all_critic_conspi(seed=DEFAULT_RND_SEED, langs=['en', 'es'], augment_data=False, num_folds=5):
     for lang in langs:
-        run_classif_experiments(lang=lang, num_folds=5, rnd_seed=seed, test=None,
+        run_classif_experiments(lang=lang, num_folds=num_folds, rnd_seed=seed, test=None,
                                 positive_class='critical', pause_after_fold=1,
                                 pause_after_model=2, augment_data=augment_data)
 
