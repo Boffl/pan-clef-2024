@@ -8,7 +8,7 @@ from sklearn.model_selection import StratifiedKFold
 
 from classif_experim.classif_utils import classif_scores
 from classif_experim.hf_skelarn_wrapper import SklearnTransformerClassif
-from data_tools.dataset_loaders import load_dataset_classification
+from data_tools.dataset_loaders import load_dataset_classification, load_aug_dataset_classification
 
 
 def build_transformer_model(model_label, model_hparams, rnd_seed):
@@ -17,7 +17,7 @@ def build_transformer_model(model_label, model_hparams, rnd_seed):
 
 
 def run_classif_crossvalid(lang, model_label, model_params, positive_class='critical', num_folds=5,
-                           rnd_seed=3154561, test=False, pause_after_fold=0):
+                           rnd_seed=3154561, test=False, pause_after_fold=0, augment_data=False):
     '''
     Run x-fold crossvalidation for a given model, and report the results.
     '''
@@ -37,7 +37,13 @@ def run_classif_crossvalid(lang, model_label, model_params, positive_class='crit
         # split data
         txt_tr, txt_tst = texts[train_index], texts[test_index]
         cls_tr, cls_tst = classes[train_index], classes[test_index]
+        print("len of train txt and cls, before augmentation:", len(txt_tr), len(cls_tr))
         id_tst = txt_ids[test_index]
+        if augment_data:
+            aug_texts, aug_classes, aug_txt_ids = load_aug_dataset_classification(lang, positive_class=positive_class)
+            txt_tr = pd.concat([txt_tr, aug_texts], ignore_index=True)
+            cls_tr = pd.concat([cls_tr, aug_classes], ignore_index=True)
+            print("Running on augmented data. Lenght of the Traininset:", len(txt_tr), len(cls_tr))
         # train model
         model.fit(txt_tr, cls_tr)
         # evaluate model
@@ -110,7 +116,7 @@ def setup_logging(log_filename):
 
 def run_classif_experiments(lang, num_folds, rnd_seed, test=False, experim_label=None,
                             pause_after_fold=0, pause_after_model=0, max_seq_length=MAX_SEQ_LENGTH,
-                            positive_class='critical', model_list=None):
+                            positive_class='critical', model_list=None, augment_data=False):
     '''
     :param positive_class: 'critical' or 'conspiracy'
     :return:
@@ -138,7 +144,7 @@ def run_classif_experiments(lang, num_folds, rnd_seed, test=False, experim_label
                 params['gradient_accumulation_steps'] = grad_accum_steps
                 res = run_classif_crossvalid(lang=lang, model_label=model, model_params=params, num_folds=num_folds,
                                              rnd_seed=rnd_seed, test=test, pause_after_fold=pause_after_fold,
-                                             positive_class=positive_class)
+                                             positive_class=positive_class, augment_data=augment_data)
                 pred_res[model] = res
                 break
             except RuntimeError as e:
@@ -157,12 +163,12 @@ def run_classif_experiments(lang, num_folds, rnd_seed, test=False, experim_label
             time.sleep(pause_after_model * 60)
     return pred_res
 
-def run_all_critic_conspi(seed=DEFAULT_RND_SEED, langs=['en', 'es']):
+def run_all_critic_conspi(seed=DEFAULT_RND_SEED, langs=['en', 'es'], augment_data=False):
     for lang in langs:
         run_classif_experiments(lang=lang, num_folds=5, rnd_seed=seed, test=None,
                                 positive_class='critical', pause_after_fold=1,
-                                pause_after_model=2)
+                                pause_after_model=2, augment_data=augment_data)
 
 if __name__ == '__main__':
-    run_all_critic_conspi()
+    run_all_critic_conspi(augment_data=True)
 

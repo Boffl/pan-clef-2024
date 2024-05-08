@@ -19,3 +19,7 @@ SPLIT_DEV_DATASET_ES = '../data/dataset_es_split_dev.json'
 
 TEST_DATASET_EN = '../data/dataset_en_test.json'
 TEST_DATASET_ES = '../data/dataset_es_test.json'
+
+# Augmented datasets
+AUG_DATASET_EN = '../data/dataset_EN_translated.json'
+AUG_DATASET_ES = '../data/dataset_ES_translated.json'

@@ -14,8 +14,28 @@ from settings import (
     SPLIT_DEV_DATASET_EN,
     SPLIT_DEV_DATASET_ES,
     TEST_DATASET_EN,
+    AUG_DATASET_EN,
+    AUG_DATASET_ES
 )
 
+def load_aug_dataset_classification(lang, string_labels=False, positive_class='conspiracy'):
+    if lang == 'en': fname = AUG_DATASET_EN
+    elif lang == 'es': fname = AUG_DATASET_ES
+    else: raise ValueError(f'Unknown language: {lang}')
+    with open(fname, 'r', encoding='utf-8') as file:
+        dataset = json.load(file)
+    # convert to a format suitable for classification
+    texts = pd.Series([doc['text'] for doc in dataset])
+    if string_labels: classes = pd.Series([doc['category'] for doc in dataset])
+    else:
+        if positive_class == 'conspiracy': binmap = BINARY_MAPPING_CONSPIRACY_POS
+        elif positive_class == 'critical': binmap = BINARY_MAPPING_CRITICAL_POS
+        else: raise ValueError(f'Unknown positive class: {positive_class}')
+        classes = [binmap[doc['category']] for doc in dataset]
+        classes = pd.Series(classes)
+    ids = pd.Series([doc['id'] for doc in dataset])
+    return texts, classes, ids
+    
 
 def load_dataset_full(lang, format='docbin'):
     '''
