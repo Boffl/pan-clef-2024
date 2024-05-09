@@ -90,7 +90,8 @@ class SklearnTransformerBase(metaclass=ABCMeta):
                 'save_strategy' : 'epoch',
                 'evaluation_strategy' : 'epoch',
                 'save_total_limit' : 2,
-                'load_best_model_at_end' : True
+                'load_best_model_at_end' : True,
+                'logging_strategy': 'epoch'
             }
         self._training_args = TrainingArguments(
             do_train=True, do_eval=self._eval is not None,
