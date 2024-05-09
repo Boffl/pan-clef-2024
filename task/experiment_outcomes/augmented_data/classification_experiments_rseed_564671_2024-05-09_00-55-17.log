@@ -1,0 +1,32 @@
+INFO:root:RUNNING classif. experiments: lang=ES, num_folds=2, max_seq_len=256, eval=0.1, rnd_seed=564671, test=None
+INFO:root:... HPARAMS = learning_rate: 2e-05; num_train_epochs: 3; warmup: 0.1; weight_decay: 0.01; batch_size: 32
+INFO:root:RUNNING crossvalid. for model: dccuchile/bert-base-spanish-wwm-cased, augment_data=True
+INFO:root:Starting Fold 1
+INFO:root:model built
+INFO:root:Fold 1 scores:
+INFO:root:F1_macro  : 0.837; F1        : 0.892; F1-neg    : 0.782; ACC       : 0.856; prec      : 0.848; recall    : 0.941; MCC       : 0.684
+INFO:root:Pausing for 1 minutes...
+INFO:root:Starting Fold 2
+INFO:root:model built
+INFO:root:Fold 2 scores:
+INFO:root:F1_macro  : 0.833; F1        : 0.883; F1-neg    : 0.784; ACC       : 0.848; prec      : 0.865; recall    : 0.901; MCC       : 0.668
+INFO:root:CROSSVALIDATION results:
+INFO:root:F1_macro  : count: 2.000; mean: 0.835; std: 0.002; min: 0.833; 25%: 0.834; 50%: 0.835; 75%: 0.836; max: 0.837
+INFO:root:F1        : count: 2.000; mean: 0.887; std: 0.007; min: 0.883; 25%: 0.885; 50%: 0.887; 75%: 0.890; max: 0.892
+INFO:root:F1-neg    : count: 2.000; mean: 0.783; std: 0.002; min: 0.782; 25%: 0.782; 50%: 0.783; 75%: 0.783; max: 0.784
+INFO:root:ACC       : count: 2.000; mean: 0.852; std: 0.005; min: 0.848; 25%: 0.850; 50%: 0.852; 75%: 0.854; max: 0.856
+INFO:root:prec      : count: 2.000; mean: 0.856; std: 0.012; min: 0.848; 25%: 0.852; 50%: 0.856; 75%: 0.861; max: 0.865
+INFO:root:recall    : count: 2.000; mean: 0.921; std: 0.028; min: 0.901; 25%: 0.911; 50%: 0.921; 75%: 0.931; max: 0.941
+INFO:root:MCC       : count: 2.000; mean: 0.676; std: 0.011; min: 0.668; 25%: 0.672; 50%: 0.676; 75%: 0.680; max: 0.684
+INFO:root:Per-fold scores:
+INFO:root:F1_macro  : [0.837, 0.833]
+INFO:root:F1        : [0.892, 0.883]
+INFO:root:F1-neg    : [0.782, 0.784]
+INFO:root:ACC       : [0.856, 0.848]
+INFO:root:prec      : [0.848, 0.865]
+INFO:root:recall    : [0.941, 0.901]
+INFO:root:MCC       : [0.684, 0.668]
+INFO:root:Confusion matrix:
+INFO:root: 534.50,  196.50
+INFO:root: 100.00, 1169.00
+INFO:root:Pausing for 2 minutes...

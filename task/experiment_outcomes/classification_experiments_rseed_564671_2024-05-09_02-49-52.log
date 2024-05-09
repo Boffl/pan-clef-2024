@@ -1,0 +1,66 @@
+INFO:root:RUNNING classif. experiments: lang=ES, num_folds=2, max_seq_len=256, eval=0.1, rnd_seed=564671, test=None
+INFO:root:... HPARAMS = learning_rate: 2e-05; num_train_epochs: 3; warmup: 0.1; weight_decay: 0.01; batch_size: 16
+INFO:root:RUNNING crossvalid. for model: bertin-project/bertin-roberta-base-spanish, augment_data=False
+INFO:root:Starting Fold 1
+INFO:root:model built
+INFO:root:Fold 1 scores:
+INFO:root:F1_macro  : 0.795; F1        : 0.847; F1-neg    : 0.743; ACC       : 0.808; prec      : 0.857; recall    : 0.838; MCC       : 0.591
+INFO:root:Pausing for 1 minutes...
+INFO:root:Starting Fold 2
+INFO:root:model built
+INFO:root:Fold 2 scores:
+INFO:root:F1_macro  : 0.773; F1        : 0.848; F1-neg    : 0.699; ACC       : 0.798; prec      : 0.811; recall    : 0.888; MCC       : 0.554
+INFO:root:CROSSVALIDATION results:
+INFO:root:F1_macro  : count: 2.000; mean: 0.784; std: 0.015; min: 0.773; 25%: 0.779; 50%: 0.784; 75%: 0.790; max: 0.795
+INFO:root:F1        : count: 2.000; mean: 0.848; std: 0.000; min: 0.847; 25%: 0.848; 50%: 0.848; 75%: 0.848; max: 0.848
+INFO:root:F1-neg    : count: 2.000; mean: 0.721; std: 0.031; min: 0.699; 25%: 0.710; 50%: 0.721; 75%: 0.732; max: 0.743
+INFO:root:ACC       : count: 2.000; mean: 0.803; std: 0.007; min: 0.798; 25%: 0.801; 50%: 0.803; 75%: 0.806; max: 0.808
+INFO:root:prec      : count: 2.000; mean: 0.834; std: 0.032; min: 0.811; 25%: 0.823; 50%: 0.834; 75%: 0.845; max: 0.857
+INFO:root:recall    : count: 2.000; mean: 0.863; std: 0.035; min: 0.838; 25%: 0.851; 50%: 0.863; 75%: 0.876; max: 0.888
+INFO:root:MCC       : count: 2.000; mean: 0.572; std: 0.026; min: 0.554; 25%: 0.563; 50%: 0.572; 75%: 0.581; max: 0.591
+INFO:root:Per-fold scores:
+INFO:root:F1_macro  : [0.795, 0.773]
+INFO:root:F1        : [0.847, 0.848]
+INFO:root:F1-neg    : [0.743, 0.699]
+INFO:root:ACC       : [0.808, 0.798]
+INFO:root:prec      : [0.857, 0.811]
+INFO:root:recall    : [0.838, 0.888]
+INFO:root:MCC       : [0.591, 0.554]
+INFO:root:Confusion matrix:
+INFO:root: 511.00,  220.00
+INFO:root: 173.50, 1095.50
+INFO:root:Pausing for 2 minutes...
+INFO:root:RUNNING crossvalid. for model: Twitter/twhin-bert-large, augment_data=False
+INFO:root:Starting Fold 1
+INFO:root:model built
+WARNING:root:GPU out of memory using batch size 16. Halving batch size and doubling gradient accumulation steps.
+INFO:root:RUNNING crossvalid. for model: Twitter/twhin-bert-large, augment_data=False
+INFO:root:Starting Fold 1
+INFO:root:model built
+INFO:root:Fold 1 scores:
+INFO:root:F1_macro  : 0.797; F1        : 0.862; F1-neg    : 0.731; ACC       : 0.818; prec      : 0.829; recall    : 0.899; MCC       : 0.599
+INFO:root:Pausing for 1 minutes...
+INFO:root:Starting Fold 2
+INFO:root:model built
+INFO:root:Fold 2 scores:
+INFO:root:F1_macro  : 0.797; F1        : 0.870; F1-neg    : 0.724; ACC       : 0.823; prec      : 0.816; recall    : 0.931; MCC       : 0.610
+INFO:root:CROSSVALIDATION results:
+INFO:root:F1_macro  : count: 2.000; mean: 0.797; std: 0.000; min: 0.797; 25%: 0.797; 50%: 0.797; 75%: 0.797; max: 0.797
+INFO:root:F1        : count: 2.000; mean: 0.866; std: 0.005; min: 0.862; 25%: 0.864; 50%: 0.866; 75%: 0.868; max: 0.870
+INFO:root:F1-neg    : count: 2.000; mean: 0.728; std: 0.005; min: 0.724; 25%: 0.726; 50%: 0.728; 75%: 0.729; max: 0.731
+INFO:root:ACC       : count: 2.000; mean: 0.821; std: 0.004; min: 0.818; 25%: 0.819; 50%: 0.821; 75%: 0.822; max: 0.823
+INFO:root:prec      : count: 2.000; mean: 0.822; std: 0.009; min: 0.816; 25%: 0.819; 50%: 0.822; 75%: 0.826; max: 0.829
+INFO:root:recall    : count: 2.000; mean: 0.915; std: 0.022; min: 0.899; 25%: 0.907; 50%: 0.915; 75%: 0.923; max: 0.931
+INFO:root:MCC       : count: 2.000; mean: 0.605; std: 0.008; min: 0.599; 25%: 0.602; 50%: 0.605; 75%: 0.607; max: 0.610
+INFO:root:Per-fold scores:
+INFO:root:F1_macro  : [0.797, 0.797]
+INFO:root:F1        : [0.862, 0.870]
+INFO:root:F1-neg    : [0.731, 0.724]
+INFO:root:ACC       : [0.818, 0.823]
+INFO:root:prec      : [0.829, 0.816]
+INFO:root:recall    : [0.899, 0.931]
+INFO:root:MCC       : [0.599, 0.610]
+INFO:root:Confusion matrix:
+INFO:root: 480.00,  251.00
+INFO:root: 108.00, 1161.00
+INFO:root:Pausing for 2 minutes...

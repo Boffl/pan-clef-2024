@@ -1,0 +1,33 @@
+INFO:root:RUNNING classif. experiments: lang=EN, num_folds=2, max_seq_len=256, eval=None, rnd_seed=564671, test=None
+INFO:root:... HPARAMS = learning_rate: 2e-05; num_train_epochs: 3; warmup: 0.1; weight_decay: 0.01; batch_size: 16
+INFO:root:RUNNING crossvalid. for model: bert-base-cased
+INFO:root:Starting Fold 1
+INFO:root:model built
+INFO:root:Fold 1 scores:
+INFO:root:F1_macro  : 0.872; F1        : 0.910; F1-neg    : 0.833; ACC       : 0.883; prec      : 0.916; recall    : 0.905; MCC       : 0.744
+INFO:root:Pausing for 1 minutes...
+INFO:root:Starting Fold 2
+INFO:root:model built
+INFO:root:Fold 2 scores:
+INFO:root:F1_macro  : 0.893; F1        : 0.928; F1-neg    : 0.859; ACC       : 0.904; prec      : 0.919; recall    : 0.937; MCC       : 0.787
+INFO:root:CROSSVALIDATION results:
+INFO:root:F1_macro  : count: 2.000; mean: 0.883; std: 0.015; min: 0.872; 25%: 0.877; 50%: 0.883; 75%: 0.888; max: 0.893
+INFO:root:F1        : count: 2.000; mean: 0.919; std: 0.012; min: 0.910; 25%: 0.915; 50%: 0.919; 75%: 0.924; max: 0.928
+INFO:root:F1-neg    : count: 2.000; mean: 0.846; std: 0.018; min: 0.833; 25%: 0.840; 50%: 0.846; 75%: 0.852; max: 0.859
+INFO:root:ACC       : count: 2.000; mean: 0.894; std: 0.015; min: 0.883; 25%: 0.889; 50%: 0.894; 75%: 0.899; max: 0.904
+INFO:root:prec      : count: 2.000; mean: 0.918; std: 0.002; min: 0.916; 25%: 0.917; 50%: 0.918; 75%: 0.918; max: 0.919
+INFO:root:recall    : count: 2.000; mean: 0.921; std: 0.023; min: 0.905; 25%: 0.913; 50%: 0.921; 75%: 0.929; max: 0.937
+INFO:root:MCC       : count: 2.000; mean: 0.765; std: 0.031; min: 0.744; 25%: 0.755; 50%: 0.765; 75%: 0.776; max: 0.787
+INFO:root:Per-fold scores:
+INFO:root:F1_macro  : [0.872, 0.893]
+INFO:root:F1        : [0.910, 0.928]
+INFO:root:F1-neg    : [0.833, 0.859]
+INFO:root:ACC       : [0.883, 0.904]
+INFO:root:prec      : [0.916, 0.919]
+INFO:root:recall    : [0.905, 0.937]
+INFO:root:MCC       : [0.744, 0.787]
+INFO:root:Confusion matrix:
+INFO:root: 581.50,  108.00
+INFO:root: 104.00, 1206.50
+INFO:root:Pausing for 2 minutes...
+

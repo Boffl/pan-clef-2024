@@ -1,0 +1,32 @@
+INFO:root:RUNNING classif. experiments: lang=ES, num_folds=2, max_seq_len=256, eval=None, rnd_seed=564671, test=None
+INFO:root:... HPARAMS = learning_rate: 2e-05; num_train_epochs: 3; warmup: 0.1; weight_decay: 0.01; batch_size: 16
+INFO:root:RUNNING crossvalid. for model: dccuchile/bert-base-spanish-wwm-cased
+INFO:root:Starting Fold 1
+INFO:root:model built
+INFO:root:Fold 1 scores:
+INFO:root:F1_macro  : 0.852; F1        : 0.899; F1-neg    : 0.806; ACC       : 0.867; prec      : 0.869; recall    : 0.931; MCC       : 0.709
+INFO:root:Pausing for 1 minutes...
+INFO:root:Starting Fold 2
+INFO:root:model built
+INFO:root:Fold 2 scores:
+INFO:root:F1_macro  : 0.836; F1        : 0.886; F1-neg    : 0.787; ACC       : 0.852; prec      : 0.863; recall    : 0.910; MCC       : 0.675
+INFO:root:CROSSVALIDATION results:
+INFO:root:F1_macro  : count: 2.000; mean: 0.844; std: 0.011; min: 0.836; 25%: 0.840; 50%: 0.844; 75%: 0.848; max: 0.852
+INFO:root:F1        : count: 2.000; mean: 0.892; std: 0.009; min: 0.886; 25%: 0.889; 50%: 0.892; 75%: 0.896; max: 0.899
+INFO:root:F1-neg    : count: 2.000; mean: 0.796; std: 0.014; min: 0.787; 25%: 0.792; 50%: 0.796; 75%: 0.801; max: 0.806
+INFO:root:ACC       : count: 2.000; mean: 0.859; std: 0.011; min: 0.852; 25%: 0.855; 50%: 0.859; 75%: 0.863; max: 0.867
+INFO:root:prec      : count: 2.000; mean: 0.866; std: 0.004; min: 0.863; 25%: 0.865; 50%: 0.866; 75%: 0.868; max: 0.869
+INFO:root:recall    : count: 2.000; mean: 0.920; std: 0.014; min: 0.910; 25%: 0.915; 50%: 0.920; 75%: 0.926; max: 0.931
+INFO:root:MCC       : count: 2.000; mean: 0.692; std: 0.024; min: 0.675; 25%: 0.684; 50%: 0.692; 75%: 0.701; max: 0.709
+INFO:root:Per-fold scores:
+INFO:root:F1_macro  : [0.852, 0.836]
+INFO:root:F1        : [0.899, 0.886]
+INFO:root:F1-neg    : [0.806, 0.787]
+INFO:root:ACC       : [0.867, 0.852]
+INFO:root:prec      : [0.869, 0.863]
+INFO:root:recall    : [0.931, 0.910]
+INFO:root:MCC       : [0.709, 0.675]
+INFO:root:Confusion matrix:
+INFO:root: 550.50,  180.50
+INFO:root: 101.00, 1168.00
+INFO:root:Pausing for 2 minutes...
