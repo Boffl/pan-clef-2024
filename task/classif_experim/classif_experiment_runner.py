@@ -43,7 +43,7 @@ def run_classif_crossvalid(lang, model_label, model_params, positive_class='crit
             aug_texts, aug_classes, aug_txt_ids = load_aug_dataset_classification(lang, positive_class=positive_class)
             txt_tr = pd.concat([txt_tr, aug_texts], ignore_index=True)
             cls_tr = pd.concat([cls_tr, aug_classes], ignore_index=True)
-            logger.info("Running on augmented data. Lenght of the Traininset:", len(txt_tr), len(cls_tr))
+            logger.info(f"Running on augmented data. Lenght of the Traininset: {len(txt_tr)}, {len(cls_tr)}")
         # train model
         model.fit(txt_tr, cls_tr)
         # evaluate model
@@ -97,7 +97,7 @@ HF_CORE_HPARAMS = {
     'num_train_epochs': 3,
     'warmup': 0.1,
     'weight_decay': 0.01,
-    'batch_size': 16,
+    'batch_size': 32,  
 }
 
 DEFAULT_RND_SEED = 564671
@@ -129,7 +129,7 @@ def run_classif_experiments(lang, num_folds, rnd_seed, test=False, experim_label
     models = HF_MODEL_LIST[lang] if model_list is None else model_list
     params = copy(HF_CORE_HPARAMS)
     params['lang'] = lang
-    params['eval'] = None
+    params['eval'] = 0.1
     params['max_seq_length'] = max_seq_length
     logger.info(f'RUNNING classif. experiments: lang={lang.upper()}, num_folds={num_folds}, '
                 f'max_seq_len={max_seq_length}, eval={params["eval"]}, rnd_seed={rnd_seed}, test={test}')
