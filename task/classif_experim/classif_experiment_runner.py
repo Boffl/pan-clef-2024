@@ -84,10 +84,14 @@ MAX_SEQ_LENGTH = 256
 
 HF_MODEL_LIST = {
     'en': [
-           'bert-base-cased',
+           #'bert-base-cased',  # Baseline provided 
+           "Twitter/twhin-bert-large",  # multilingual, trained on twitter
+
           ],
     'es': [
-            'dccuchile/bert-base-spanish-wwm-cased',
+            #'dccuchile/bert-base-spanish-wwm-cased',  # Baseline
+            'bertin-project/bertin-roberta-base-spanish', 
+            "Twitter/twhin-bert-large",  # multilingual, trained on twitter
           ],
 }
 
@@ -97,7 +101,7 @@ HF_CORE_HPARAMS = {
     'num_train_epochs': 3,
     'warmup': 0.1,
     'weight_decay': 0.01,
-    'batch_size': 32,  
+    'batch_size': 16,  # batch size 32 gives worse results and is not much faster, so leave it there
 }
 
 DEFAULT_RND_SEED = 564671
