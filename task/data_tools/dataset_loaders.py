@@ -9,6 +9,7 @@ from data_tools.dataset_utils import reconstruct_spacy_docs_from_json, BINARY_MA
 from settings import (
     TRAIN_DATASET_EN,
     TRAIN_DATASET_ES,
+    TRAIN_DATASET_COMBINED,
     SPLIT_TRAIN_DATASET_EN,
     SPLIT_TRAIN_DATASET_ES,
     SPLIT_DEV_DATASET_EN,
@@ -46,6 +47,7 @@ def load_dataset_full(lang, format='docbin'):
     print(f'Loading official JSON {lang} dataset')
     if lang == 'en': fname = TRAIN_DATASET_EN
     elif lang == 'es': fname = TRAIN_DATASET_ES
+    elif lang == 'combined': fname = TRAIN_DATASET_COMBINED
     else: raise ValueError(f'Unknown language: {lang}')
     if format == 'docbin':
         dataset = reconstruct_spacy_docs_from_json(fname, lang)
@@ -83,7 +85,7 @@ def load_dataset_split(lang, format='docbin'):
 def load_dataset_classification(lang, string_labels=False, positive_class='conspiracy'):
     '''
     Load official .json dataset and convert it to a format suitable for classification.
-    :param lang: 'en' or 'es'
+    :param lang: 'en', 'es' or 'combined'
     :param string_labels: if True, return orig. string labels from json,
             otherwise return binary labels, 0 for negative, 1 for positive class
     :param positive_class: 'conspiracy' or 'critical'

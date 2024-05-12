@@ -84,15 +84,17 @@ MAX_SEQ_LENGTH = 256
 
 HF_MODEL_LIST = {
     'en': [
-           #'bert-base-cased',  # Baseline provided 
-           "Twitter/twhin-bert-large",  # multilingual, trained on twitter
-
-          ],
+        #'bert-base-cased',  # Baseline provided 
+        "Twitter/twhin-bert-large",  # multilingual, trained on twitter
+    ],
     'es': [
-            #'dccuchile/bert-base-spanish-wwm-cased',  # Baseline
-            'bertin-project/bertin-roberta-base-spanish', 
-            "Twitter/twhin-bert-large",  # multilingual, trained on twitter
-          ],
+        #'dccuchile/bert-base-spanish-wwm-cased',  # Baseline
+        "bertin-project/bertin-roberta-base-spanish", 
+        "Twitter/twhin-bert-large",  # multilingual, trained on twitter
+    ],
+    'combined': [
+        "Twitter/twhin-bert-large",  # multilingual, trained on twitter
+    ],
 }
 
 # default reasonable parameters for SklearnTransformerBase
