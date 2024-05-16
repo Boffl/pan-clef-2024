@@ -43,7 +43,7 @@ def run_classif_crossvalid(lang, model_label, model_params, positive_class='crit
             aug_texts, aug_classes, aug_txt_ids = load_aug_dataset_classification(lang, positive_class=positive_class)
             txt_tr = pd.concat([txt_tr, aug_texts], ignore_index=True)
             cls_tr = pd.concat([cls_tr, aug_classes], ignore_index=True)
-            logger.info(f"Running on augmented data. Lenght of the Traininset: {len(txt_tr)}, {len(cls_tr)}")
+            logger.info(f"Running on augmented data. Length of the Training set: {len(txt_tr)}, {len(cls_tr)}")
         # train model
         model.fit(txt_tr, cls_tr)
         # evaluate model
@@ -93,7 +93,7 @@ HF_MODEL_LIST = {
         "Twitter/twhin-bert-large",  # multilingual, trained on twitter
     ],
     'combined': [
-        "Twitter/twhin-bert-large",  # multilingual, trained on twitter
+        "cardiffnlp/twitter-xlm-roberta-base",  # multilingual, trained on twitter
     ],
 }
 

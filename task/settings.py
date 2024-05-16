@@ -26,3 +26,4 @@ TEST_DATASET_ES = '../data/dataset_es_test.json'
 # Augmented datasets
 AUG_DATASET_EN = '../data/dataset_EN_translated.json'
 AUG_DATASET_ES = '../data/dataset_ES_translated.json'
+AUG_DATASET_COMBINED = '../data/dataset_combined_translated.json'

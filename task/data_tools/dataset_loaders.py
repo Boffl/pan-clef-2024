@@ -16,12 +16,14 @@ from settings import (
     SPLIT_DEV_DATASET_ES,
     TEST_DATASET_EN,
     AUG_DATASET_EN,
-    AUG_DATASET_ES
+    AUG_DATASET_ES,
+    AUG_DATASET_COMBINED
 )
 
 def load_aug_dataset_classification(lang, string_labels=False, positive_class='conspiracy'):
     if lang == 'en': fname = AUG_DATASET_EN
     elif lang == 'es': fname = AUG_DATASET_ES
+    elif lang == 'combined': fname = AUG_DATASET_COMBINED
     else: raise ValueError(f'Unknown language: {lang}')
     with open(fname, 'r', encoding='utf-8') as file:
         dataset = json.load(file)
