@@ -32,7 +32,7 @@ else:
 
 
 def classify(text, model, tokenizer, labels=["yes", "no"]):
-    
+
     # whyyyyy does the truncation argument seem to have no effect??? what is wrong???
     model_inputs = tokenizer([text], return_tensors="pt", truncation=True).to(device)
     with torch.no_grad():
@@ -60,6 +60,10 @@ def classify(text, model, tokenizer, labels=["yes", "no"]):
 
 
 if __name__ == "__main__":
+    ########################
+    # Example call:
+    # !python LM_classify.py distilbert/distilgpt2 ../../data/dataset_en_split_dev.json  --prompt_file prompt1.txt
+    #########################
     parser = argparse.ArgumentParser()
     parser.add_argument("model_name")
     parser.add_argument("data_file")
@@ -95,12 +99,14 @@ if __name__ == "__main__":
 
     model = AutoModelForCausalLM.from_pretrained(model_name, quantization_config=bnb_config, device_map="auto")  #  load_in_8bit=True Quantization, not working at the moment, for some reason...
     print("download done")
-
     ids = []
     predictions = []
     for datapoint in tqdm(dataset):
         text = datapoint['text']
         ids.append(datapoint['id'])
+
+        # Generate response
+
         classification_done = False
         while not classification_done:
       
@@ -114,7 +120,7 @@ if __name__ == "__main__":
                 print("The input was to long, cutting it in half...")
                 torch.cuda.empty_cache()
                 # cut the text in half
-                text = " ".join(text.split()[:len(text.split())])
+                text = " ".join(text.split(" ")[len(text.split())/2:])
             
         predictions.append(label)
         torch.cuda.empty_cache()

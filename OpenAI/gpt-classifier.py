@@ -4,6 +4,7 @@ import jsonlines
 from tqdm import tqdm
 from argparse import ArgumentParser
 from generate import OpenAiModels
+from typing import list
 
 
 def make_logit_bias(inputs: list[ str ], model_name='gpt-3.5-turbo'):
