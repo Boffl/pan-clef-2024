@@ -32,12 +32,16 @@ def set_torch_np_random_rseed(rseed):
 class SklearnTransformerBase(metaclass=ABCMeta):
     def __init__(self, hf_model_label, lang:str, eval=0.1,
                  learning_rate=2e-5, num_train_epochs=3, weight_decay=0.01, batch_size=16, warmup=0.1, gradient_accumulation_steps=1,
-                 max_seq_length=128, device=None, rnd_seed=381757, tmp_folder=None):
+                 max_seq_length=128, device=None, rnd_seed=381757, tmp_folder=None,
+                 hidden_dropout_prob=None,
+                 attention_probs_dropout_prob=None):
         '''
         :param hf_model_label: hugginface repo model identifier
         :param tmp_folder: Folder for saving model checkpoints, can be used for resuming the training.
             If None, temporary folder will be used and resuming is not possible.
         :param eval: A proportion of the train set used for model evaluation, or the number of train exapmples used.
+        :param hidden_dropout_prob: something something useful
+        :param attention_probs_dropout_prob: something something useful
         If None, no evaluation will be performed - model will be trained on a fixed number of epochs.
         '''
         self._hf_model_label = hf_model_label
@@ -52,6 +56,8 @@ class SklearnTransformerBase(metaclass=ABCMeta):
         self._batch_size = batch_size
         self._gradient_accumulation_steps = gradient_accumulation_steps
         self._warmup = warmup
+        self._hidden_dropout_prob = hidden_dropout_prob
+        self._attention_probs_dropout_prob = attention_probs_dropout_prob
         self.tokenizer = None
         self.model = None
         #set_seed(rnd_seed)
@@ -195,8 +201,15 @@ class SklearnTransformerClassif(SklearnTransformerBase):
         self.tokenizer = AutoTokenizer.from_pretrained(self._hf_model_label)
         self._init_tokenizer_params()
         # load model
-        self.model = AutoModelForSequenceClassification.from_pretrained(
-                        self._hf_model_label, num_labels=num_classes).to(self._device)
+        kwargs = {
+            'pretrained_model_name_or_path':self._hf_model_label,
+            'num_labels': num_classes
+        }
+        if self._hidden_dropout_prob is not None:
+            kwargs['hidden_dropout_prob'] = self._hidden_dropout_prob
+        if self._attention_probs_dropout_prob is not None:
+            kwargs['attention_probs_dropout_prob'] = self._attention_probs_dropout_prob
+        self.model = AutoModelForSequenceClassification.from_pretrained(**kwargs).to(self._device)
 
     def set_string_labels(self, labels: List[str]):
         ''' Set 1-1 mapping between string labels and corresponding integer indices.
