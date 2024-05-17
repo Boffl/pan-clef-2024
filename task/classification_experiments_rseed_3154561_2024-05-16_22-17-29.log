@@ -1,0 +1,16 @@
+INFO:root:RUNNING classif. experiments: lang=COMBINED, num_folds=5, max_seq_len=256, eval=0.1, rnd_seed=3154561, test=False
+INFO:root:... HPARAMS = learning_rate: 2e-05; num_train_epochs: 3; warmup: 0.1; weight_decay: 0.01; batch_size: 16
+INFO:root:RUNNING crossvalid. for model: cardiffnlp/twitter-xlm-roberta-base, augment_data=True
+INFO:root:Starting Fold 1
+INFO:root:model built
+INFO:root:Running on augmented data. Length of the Training set: 13950, 13950
+INFO:root:Fold 1 scores:
+INFO:root:F1_macro  : 0.882; F1        : 0.916; F1-neg    : 0.847; ACC       : 0.892; prec      : 0.914; recall    : 0.919; MCC       : 0.764
+INFO:root:Starting Fold 2
+INFO:root:model built
+INFO:root:Running on augmented data. Length of the Training set: 13950, 13950
+INFO:root:Fold 2 scores:
+INFO:root:F1_macro  : 0.870; F1        : 0.906; F1-neg    : 0.834; ACC       : 0.880; prec      : 0.916; recall    : 0.896; MCC       : 0.741
+INFO:root:Starting Fold 3
+INFO:root:model built
+INFO:root:Running on augmented data. Length of the Training set: 13950, 13950
