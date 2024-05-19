@@ -94,6 +94,7 @@ HF_MODEL_LIST = {
     ],
     'combined': [
         "cardiffnlp/twitter-xlm-roberta-base",  # multilingual, trained on twitter
+        "cardiffnlp/twitter-xlm-roberta-large-2022",  # multilingual, trained on twitter, large
     ],
 }
 
