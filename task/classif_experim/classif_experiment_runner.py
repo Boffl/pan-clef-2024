@@ -5,6 +5,7 @@ import datetime
 import pandas as pd
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import StratifiedKFold
+import random
 
 from classif_experim.classif_utils import classif_scores
 from classif_experim.hf_skelarn_wrapper import SklearnTransformerClassif
@@ -17,11 +18,13 @@ def build_transformer_model(model_label, model_hparams, rnd_seed):
 
 
 def run_classif_crossvalid(lang, model_label, model_params, positive_class='critical', num_folds=5,
-                           rnd_seed=3154561, test=False, pause_after_fold=0, augment_data=False):
+                           rnd_seed=None, test=False, pause_after_fold=0, augment_data=False):
     '''
     Run x-fold crossvalidation for a given model, and report the results.
     '''
     logger.info(f'RUNNING crossvalid. for model: {model_label}, augment_data={augment_data}')
+    if rnd_seed is None:
+        rnd_seed = random.randint(0, 100000)
     score_fns = classif_scores('all')
     texts, classes, txt_ids = load_dataset_classification(lang, positive_class=positive_class)
     if test: texts, classes, txt_ids = texts[:test], classes[:test], txt_ids[:test]
