@@ -83,6 +83,27 @@ def generate (messages, model, tokenizer):
     return tokenizer.decode(response, skip_special_tokens=True)
 
 
+def COT_classify(messages):
+        
+        # Generating the first prompt, reasoning :D
+        response_text = generate(messages, model, tokenizer)
+
+        # adding prompt for the classification
+        messages += [
+            {"role": "assistant", "content": response_text},
+            {"role": "user", "content": f"Given your analysis would you consider this text conspiratorial? Answer with one word yes/no."}
+        ]
+        # generate a response to classify the input
+        classification_response = generate(messages, model, tokenizer)
+        
+        # if the response (.lower().strip()) isnot in the classes use the classify function
+        if classification_response.lower().strip() not in labels:
+            classification_response = classify(messages, model, tokenizer, labels)
+        
+        prediction = label_dict[classification_response.lower().strip()]
+        torch.cuda.empty_cache()
+        return response_text, prediction
+
 
 if __name__ == "__main__":
 
@@ -96,10 +117,21 @@ if __name__ == "__main__":
     parser.add_argument("model_name")
     parser.add_argument("data_file")
     parser.add_argument("prompt_file")
+    parser.add_argument("--voting", type=int, help="either 0 or an integter. \
+                        If non-zero, the model is asked to reason n times and a majority vote is taken for the final label",
+                        default=0)
+    parser.add_argument("--few_shot", default="", help="file with few-shoe examples")
     args = parser.parse_args()
     model_id = args.model_name
     data_file = args.data_file
     prompt_file = args.prompt_file
+    voting = args.voting
+    few_shot_file = args.few_shot
+
+    if not voting%2:
+        print("Warning: n-votes must should an odd number!!!")
+  
+
 
 
     with open(data_file, "r", encoding="utf-8") as injson:
@@ -139,29 +171,40 @@ if __name__ == "__main__":
         text = datapoint['text']
         ids.append(datapoint['id'])
 
-        # filling in the prompt, make a new one every time...
-        messages = deepcopy(prompt_messages)
-        messages[1]["content"] = re.sub(r"<text>", text, messages[1]["content"])
-        
-        # Generating the first prompt, reasoning :D
-        response_text = generate(messages, model, tokenizer)
-        responses.append(response_text)
 
-        # adding prompt for the classification
-        messages += [
-            {"role": "assistant", "content": response_text},
-            {"role": "user", "content": f"Given your analysis would you consider this text conspiratorial? Answer with one word yes/no."}
-        ]
-        # generate a response to classify the input
-        response_text = generate(messages, model, tokenizer)
+
+        if few_shot_file:  # few-shot prompting
+            messages = [{"role": "system", 
+                         "content": "You are a helpful assistant, tasked with classifying the user input according to following classes: CRITICAL, CONSPIRACY"}]
+            with jsonlines.open(few_shot_file) as reader:
+                for line in reader:
+                    messages.append(line)
+            messages.append(
+                {"role": "user", "content": text}
+            )
+            response = prediction = generate(messages, model, tokenizer)
+            torch.cuda.empty_cache()
+
+        else:  # COT prompting
+            # filling in the prompt, make a new one every time...
+            messages = deepcopy(prompt_messages)
+            messages[-1]["content"] = re.sub(r"<text>", text, messages[-1]["content"])
+            print(messages)
+
+            if voting:
+                response_suggestions = []
+                prediction_suggestions = []
+                for i in range(voting):
+                    response_suggestion, prediction_suggestion = COT_classify(messages)
+                    response_suggestions.append(response_suggestion)
+                    prediction_suggestions.append(prediction_suggestion)
+                prediction = max(prediction_suggestions, key=prediction_suggestions.count)
+                response = response_suggestions  # we save all the responses...
+            else:
+                response, prediction = COT_classify(messages)
         
-        # if the response (.lower().strip()) isnot in the classes use the classify function
-        if response_text.lower().strip() not in labels:
-            response_text = classify(messages, model, tokenizer, labels)
-        
-        prediction = label_dict[response_text.lower().strip()]
+        responses.append(response)
         predictions.append(prediction)
-        torch.cuda.empty_cache()
 
         # saving the results, make a sensible filename
     timestamp = datetime.now().strftime('%m-%d_%H_%M')
