@@ -36,12 +36,12 @@ def load_or_build_classif_fulltrain_model(lang, model_name, model_label, rseed=3
         print(f'No model found at {mfolder}. Building model.')
         build_classif_model_on_full_train(
             lang, model_name, model_label,
-            rseed=rseed, positive_class=positive_class,
-            augment_data=augment_data, save=True)
+            rseed=rseed, augment_data=augment_data,
+            positive_class=positive_class, save=True)
         return SklearnTransformerClassif.load(mfolder)
 
-def build_classif_model_on_full_train(lang, model_name, model_label, positive_class='conspiracy',
-                                      augment_data=False, rseed=35412, save=True):
+def build_classif_model_on_full_train(lang, model_name, model_label, augment_data=False,
+                                      positive_class='conspiracy', rseed=35412, save=True):
     ''' Builds a finetuned transformer for conspiracy-critical classification. '''
     txt_tr, cls_tr, _ = load_dataset_classification(lang, string_labels=False, positive_class=positive_class)
     if augment_data:
@@ -52,7 +52,7 @@ def build_classif_model_on_full_train(lang, model_name, model_label, positive_cl
     params = create_finetune_hparams(lang)
     #params['num_train_epochs'] = 0.5 # for testing
     try_batch_size = params['batch_size']
-    mfolder = get_model_folder_name(lang, model_label, rseed, positive_class)
+    mfolder = get_model_folder_name(lang, model_label, augment_data, rseed, positive_class)
     grad_accum_steps = 1
     while try_batch_size >= 1:
         try:
