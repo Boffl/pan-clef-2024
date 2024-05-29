@@ -12,7 +12,7 @@ from data_tools.evaluation_utils import evaluate_classif_predictions
 from settings import TEST_DATASET_EN, TEST_DATASET_ES
 
 
-def evaluate_on_test_dataset(model: SklearnTransformerClassif, lang: str, positive_class: str, model_label: str):
+def evaluate_on_test_dataset(model: SklearnTransformerClassif, lang: str, positive_class: str, model_label: str, rseed=35412):
     '''
     :param positive_class: 'conspiracy' or 'critical', depending on how the model was trained
     :return:
@@ -21,12 +21,12 @@ def evaluate_on_test_dataset(model: SklearnTransformerClassif, lang: str, positi
     txt, ids = load_texts_and_ids_from_json(test_fname)
     cls_pred = model.predict(txt)
     cls_pred = binary_labels_to_str(cls_pred, positive_class)
-    pred_fname = f'predictions_{lang}_{model_label}.json'
+    pred_fname = f'predictions_{lang}_{model_label}_rseed[{rseed}].json'
     save_text_category_predictions_to_json(ids, cls_pred, pred_fname)
     # assuming that the test datasets contain the correct class labels, not only the texts and ids
     evaluate_classif_predictions(pred_fname, test_fname, positive_class)
 
-def build_eval_model(lang, positive_class='conspiracy', baseline=False, augment_data=False):
+def build_eval_model(lang, positive_class='conspiracy', baseline=False, augment_data=False, rseed=35412):
     if baseline:
         model_name = 'bert-base-cased' if lang == 'en' else 'dccuchile/bert-base-spanish-wwm-cased'
         model_label = 'bert-baseline'
@@ -35,7 +35,7 @@ def build_eval_model(lang, positive_class='conspiracy', baseline=False, augment_
         model_label = "XLMR-large-2022"
         model_lang = 'combined'
     model = load_or_build_classif_fulltrain_model(model_lang, model_name, model_label, augment_data=augment_data,
-                                              positive_class=positive_class)
+                                              positive_class=positive_class, rseed=rseed)
     evaluate_on_test_dataset(model, lang, positive_class=positive_class)
 
 if __name__ == '__main__':
